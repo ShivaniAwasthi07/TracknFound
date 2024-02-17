@@ -1,54 +1,32 @@
-# from dotenv import load_dotenv
-# import os
-# 
-# def run():
-#     load_dotenv()  # This line brings all environment variables from .env into os.environ
-#     print(os.environ['TYPE'])
-# 
-# run()
-
-# import streamlit as st
-# 
-# st.session_state.otp = False
-# 
-# st.title("Login")
-# 
-# # Email input
-# email = st.text_input("Email")
-# 
-# # Button to send OTP
-# 
-# if st.button("Send OTP"):
-#     st.session_state.otp = True
-# # OTP input
-# 
-# # if st.session_state.otp:
-# otp = st.text_input("OTP")
-# 
-# # Redirect to home page on sign-in
-
-
-
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
-from main import create_user
-from dotenv import load_dotenv
-import os
-
-load_dotenv()  # This line brings all environment variables from .env into os.environ
+from main import create_user # This line brings all environment variables from .env into os.environ
+from main import session_state
 
 
 
 
-def login_function(email):
+
+def login_function(email, password):
     try:
-        user=auth.get_user_by_email(email)
+        user = auth.get_user_by_email(email)
+        # print(user)
+        # print(user.uid)
+        session_state.user_data = {
+            "uid": user.uid,
+            "email": user.email,
+            "display_name": user.display_name
+        }
         st.success("Login successful!")
-        st.switch_page('pages/home_page.py')
+        st.switch_page('pages/home.py')
+
     except Exception as e:
+        print(e)
         st.warning('Login failed')
+
+
 def create_account():
     st.subheader("Create Account")
     username = st.text_input("Username")
@@ -57,13 +35,9 @@ def create_account():
 
     # Implement code to save user data to database
     if st.button("Create Account"):
-        user=auth.create_user(email=email,password=password,uid=username)
-
+        user=auth.create_user(email=email,password=password,id=username)
         st.success("Account created successfully!")
         st.balloons()
-        # st.text_input("Username", value="", key="clear_username_input")
-        # st.text_input("Email", value="", key="clear_email_input")
-        # st.text_input("Password", value="", key="clear_password_input")
         create_user(username, email)
         st.rerun()
         
@@ -77,7 +51,7 @@ def login():
 
     # Implement code to authenticate user
     if st.button("Login"):
-        login_function(email)
+        login_function(email,password)
     
 def main():
     st.title("Login Page")

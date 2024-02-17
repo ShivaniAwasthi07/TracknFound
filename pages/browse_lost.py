@@ -1,5 +1,8 @@
 import streamlit as st
 from datetime import date
+from main import session_state
+
+
 def browse_lost_item_page():
     st.title("Browse Lost Item")
 
@@ -14,5 +17,7 @@ def browse_lost_item_page():
         st.success("Successful!")
         st.balloons()
 
-# Display the report found item page
-browse_lost_item_page()
+if session_state.user_data:
+    browse_lost_item_page()
+else:
+    st.switch_page('pages/login.py')
