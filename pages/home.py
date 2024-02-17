@@ -1,4 +1,5 @@
 import streamlit as st
+from main import session_state
 
 def clickable_card(title, page):
     st.markdown(
@@ -51,20 +52,23 @@ grid_layout = [
 col1, col2 = st.columns(2)
 
 # Create clickable cards in each column based on the grid layout
-for row in grid_layout:
-    for box_num in row:
-        if box_num == 0:
-            with col1:
-                clickable_card('Report Found', 'report_found.py')
-        elif box_num == 1:
-            with col1:
-                clickable_card('Report Lost', 'report_lost.py')
-        elif box_num == 2:
-            with col2:
-                clickable_card('Browse Lost', 'browse_lost.py')
-                
-        elif box_num == 3:
-            with col2:
-                clickable_card('Browse Found', 'browse_found.py')
+if session_state.user_data:   
+    for row in grid_layout:
+        for box_num in row:
+            if box_num == 0:
+                with col1:
+                    clickable_card('Report Found', 'report_found.py')
+            elif box_num == 1:
+                with col1:
+                    clickable_card('Report Lost', 'report_lost.py')
+            elif box_num == 2:
+                with col2:
+                    clickable_card('Browse Lost', 'browse_lost.py')
+                    
+            elif box_num == 3:
+                with col2:
+                    clickable_card('Browse Found', 'browse_found.py')
+else:
+    st.switch_page('pages/login.py')
                 
 

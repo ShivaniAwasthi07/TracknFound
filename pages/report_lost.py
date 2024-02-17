@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import date
+from main import session_state
 
 def report_lost_item_page():
     st.title("Report Lost Item")
@@ -17,5 +18,7 @@ def report_lost_item_page():
         st.success("Item reported successfully!")
         st.balloons()
 
-# Display the report found item page
-report_lost_item_page()
+if session_state.user_data:
+    report_lost_item_page()
+else:
+    st.switch_page('pages/login.py')

@@ -1,5 +1,8 @@
 import streamlit as st
 from datetime import date
+from main import session_state
+
+
 def browse_found_item_page():
     st.title("Browse Found Item")
 
@@ -15,4 +18,8 @@ def browse_found_item_page():
         st.balloons()
 
 # Display the report found item page
-browse_found_item_page()
+
+if session_state.user_data:
+    browse_found_item_page()
+else:
+    st.switch_page('pages/login.py')
