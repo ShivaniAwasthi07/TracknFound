@@ -11,7 +11,7 @@ def browse_lost_item_page():
 
     if st.button("Submit"):
         # Process the submitted data (e.g., save to database)
-        st.success("Item reported successfully!")
+        st.success("Successful!")
         st.balloons()
 
 # Display the report found item page
