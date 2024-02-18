@@ -56,4 +56,5 @@ if not firebase_admin._apps:
 db = firestore.client()
 bucket = storage.bucket()
 
+st.set_page_config(initial_sidebar_state='collapsed')
 

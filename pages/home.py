@@ -39,6 +39,7 @@ def clickable_card(title, page):
         st.switch_page(f'pages/{page}')
 
 # Page starts
+st.set_page_config(layout="centered")
 st.title("Digital Lost and Found Platform")
 
 
