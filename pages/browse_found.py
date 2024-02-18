@@ -1,25 +1,35 @@
 import streamlit as st
-from datetime import date
-from main import session_state
+from main import session_state, db
 
+# Function to fetch found items from Firebase Firestore
+def fetch_found_items():
+    found_items_ref = db.collection('found_items')
+    found_items = found_items_ref.get()
+    return found_items
 
-def browse_found_item_page():
-    st.title("Browse Found Item")
-
-    category = st.selectbox("category",["Laptop","Phone","Bag","Other"])
-    date = st.date_input("Select the date")
-    lastseen = st.text_input("Found location")
-    description = st.text_area("Description")
-    image = st.file_uploader("Upload Image", type=["jpg", "png"])
-
-    if st.button("Submit"):
-        # Process the submitted data (e.g., save to database)
-        st.success("Item reported successfully!")
-        st.balloons()
+# Main function to display found items
+def browse_found_items():
+    st.title("Browse Found Items")
+    
+    # Fetch found items from Firestore
+    found_items = fetch_found_items()
+    
+    # Display found items in a table
+    if found_items:
+        data = []
+        for item in found_items:
+            item_data = item.to_dict()
+            data.append(item_data)
+        
+        st.table(data)
+    else:
+        st.write("No items found.")
 
 # Display the report found item page
 
 if session_state.user_data:
-    browse_found_item_page()
+    browse_found_items()
 else:
-    st.switch_page('pages/login.py')
+    st.error("Please log in to browse found items.")
+    st.button("Log In")
+
