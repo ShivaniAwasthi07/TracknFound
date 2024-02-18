@@ -1,8 +1,19 @@
 import streamlit as st
-from main import session_state, db
+from main import session_state, db,bucket
 from datetime import datetime
 
-def create_found_item(category, description, found_at, image_url, found_date, found_by):
+def upload_image_to_storage(image_file):
+    # Upload image to Firebase Cloud Storage
+    blob = bucket.blob("images/" + image_file.name)
+    blob.upload_from_file(image_file)
+    
+    # Get public URL of the uploaded image
+    url = blob.public_url
+    
+    return url
+
+def create_found_item(category, description, found_at, image_file, found_date, found_by):
+    image_url = upload_image_to_storage(image_file)
     found_items = db.collection('found_items').document()
     found_items.set({
         "category": category,
@@ -21,13 +32,13 @@ def report_found_item_page():
     # Form inputs
     category = st.selectbox("Category", ["Laptop", "Phone", "Bag", "Other"])
     description = st.text_area("Description")
-    image_url = st.file_uploader("Upload Image", type=["jpg", "png"])
+    image_file = st.file_uploader("Upload Image", type=["jpg", "png"])
     found_at = st.text_area("Found At:")
-    found_date = st.date_input("Select a Date")
+    found_date = st.date_input("Found Date")
     found_by = session_state.user_data['uid']
     # Submit button
     if st.button("Submit"):
-        create_found_item(category, description, found_at, image_url,found_date, found_by)
+        create_found_item(category, description, found_at, image_file,found_date, found_by)
         st.success("Item reported successfully!")
         st.balloons()
 
