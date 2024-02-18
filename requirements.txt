@@ -2,3 +2,4 @@ streamlit
 python-dotenv
 datetime
 firebase-admin
+urllib3==1.26.6
