@@ -45,7 +45,7 @@ bucket = storage.bucket()
 
 st.set_page_config(initial_sidebar_state='collapsed')
 
-if st.session_state.user_data:
+if session_state.user_data:
     st.switch_page('pages/home.py')
 else:
     st.switch_page('pages/login.py')
