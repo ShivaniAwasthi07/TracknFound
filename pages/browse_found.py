@@ -17,16 +17,43 @@ def browse_found_items():
     # Display found items in a table
     if found_items:
         data = []
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.subheader("  Image")
+        with col2:
+            st.subheader("  Data")
+        with col4:
+            st.subheader('  Actions')
+        
+        
         for item in found_items:
             item_data = item.to_dict()
             data.append(item_data)
-        
+
+            with st.container(  border=True):
+                col1, col2, col3, col4 = st.columns(4)
+
+            
+                with col1:
+                    st.image(item_data['image_url'], width=200)
+
+                with col2:
+                    temp = item_data.pop('image_url')
+                    st.write(item_data)
+                
+
+                with col4:
+                    st.header("")
+                    st.header("")
+                    st.header("")
+                    st.button('Claim', key=item)
+            
     else:
         st.write("No items found.")
 
-# Display the report found item page
-
+# Display the report found item page    
 if session_state.user_data:
+    st.set_page_config(layout="wide")
     browse_found_items()
 else:
     st.error("Please log in to browse found items.")
