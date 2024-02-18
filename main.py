@@ -1,10 +1,8 @@
 import streamlit as st
-from firebase_admin import firestore
+from firebase_admin import firestore,credentials,auth,storage
 import firebase_admin
 from dotenv import load_dotenv
 import os
-from firebase_admin import credentials
-from firebase_admin import auth
 from datetime import datetime
 
 # Initializing a session state
@@ -32,9 +30,11 @@ if not firebase_admin._apps:
         "universe_domain": os.environ['UNIVERSE_DOMAIN']
     }
     cred=credentials.Certificate(cred_json)
-    firebase_admin.initialize_app(cred)
-
+    firebase_admin.initialize_app(cred, {
+    'storageBucket': 'tracknfound.appspot.com'
+})
 db = firestore.client()
+bucket = storage.bucket()
 def create_user(username, email):
     user_ref = db.collection('users').document()
     user_ref.set({
