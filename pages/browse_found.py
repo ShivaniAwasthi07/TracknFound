@@ -39,7 +39,8 @@ def browse_found_items():
 
                 with col2:
                     temp = item_data.pop('image_url')
-                    st.write(item_data)
+                    for key, value in item_data.items():
+                        st.write(key, ': ', value)
                 
 
                 with col4:
@@ -56,6 +57,5 @@ if session_state.user_data:
     st.set_page_config(layout="wide")
     browse_found_items()
 else:
-    st.error("Please log in to browse found items.")
-    st.button("Log In")
+    st.switch_page('pages/login.py')
 
