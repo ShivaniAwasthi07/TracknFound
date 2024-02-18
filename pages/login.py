@@ -1,6 +1,4 @@
 import streamlit as st
-import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import auth
 from main import create_user # This line brings all environment variables from .env into os.environ
 from main import session_state

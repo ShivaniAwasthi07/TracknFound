@@ -17,18 +17,6 @@ def create_user(username, email):
         'email': email,
     })
 
-def create_lost_item(category, description, last_seen, image_url, found_by):
-    lost_items_ref = db.collection('lost_items').document()
-    lost_items_ref.set({
-        "category": category,
-        "description": description,
-        "last_seen": last_seen,
-        "image_url": image_url,
-        "lost_date":lost_date,
-        "found_by": found_by,
-        "created_at": datetime.now()
-})
-
 # Create session state object
 session_state = SessionState()
 
@@ -56,4 +44,10 @@ db = firestore.client()
 bucket = storage.bucket()
 
 st.set_page_config(initial_sidebar_state='collapsed')
+
+if st.session_state.user_data:
+    st.switch_page('pages/home.py')
+else:
+    st.switch_page('pages/login.py')
+
 
