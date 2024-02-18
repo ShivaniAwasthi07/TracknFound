@@ -14,7 +14,7 @@ def create_user(username, email):
     user_ref = db.collection('users').document()
     user_ref.set({
         'username': username,
-        'email': email,
+        'email': email
     })
 
 # Create session state object

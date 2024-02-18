@@ -22,7 +22,8 @@ def create_lost_item(category, description, last_seen, image_file, lost_date, ow
         "image_url": image_url,
         "lost_date":lost_date.strftime('%Y/%m/%d'),
         "owner": owner,
-        "created_at": datetime.now().strftime('%Y/%m/%d')
+        "created_at": datetime.now().strftime('%Y/%m/%d'),
+        "reported_by": session_state.user_data['uid']
     })
 
 

@@ -41,14 +41,16 @@ def browse_found_items():
                     temp = item_data.pop('image_url')
                     for key, value in item_data.items():
                         st.write(key, ': ', value)
-                
-
+                  
                 with col4:
                     st.header("")
                     st.header("")
                     st.header("")
-                    st.button('Claim', key=item)
-            
+                    if session_state.user_data['uid'] == item_data["reported_by"]:
+                        st.button('Delete', key=item)
+                    else:
+                        st.button('Claim', key=item)
+                                    
     else:
         st.write("No items found.")
 
