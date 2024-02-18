@@ -21,7 +21,6 @@ def browse_found_items():
             item_data = item.to_dict()
             data.append(item_data)
         
-        st.table(data)
     else:
         st.write("No items found.")
 
