@@ -6,10 +6,11 @@ def upload_image_to_storage(image_file):
     # Upload image to Firebase Cloud Storage
     blob = bucket.blob("images/" + image_file.name)
     blob.upload_from_file(image_file)
+    blob.make_public()
     
     # Get public URL of the uploaded image
     url = blob.public_url
-    
+
     return url
 
 def create_found_item(category, description, found_at, image_file, found_date, found_by):

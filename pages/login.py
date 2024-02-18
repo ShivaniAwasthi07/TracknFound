@@ -6,9 +6,6 @@ from main import create_user # This line brings all environment variables from .
 from main import session_state
 
 
-
-
-
 def login_function(email, password):
     try:
         user = auth.get_user_by_email(email)
