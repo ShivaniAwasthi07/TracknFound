@@ -7,7 +7,6 @@ def upload_image_to_storage(image_file):
     blob = bucket.blob("images/" + image_file.name)
     blob.upload_from_file(image_file)
     blob.make_public()
-    
     # Get public URL of the uploaded image
     url = blob.public_url
 
