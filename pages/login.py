@@ -30,7 +30,7 @@ def create_account():
 
     # Implement code to save user data to database
     if st.button("Create Account"):
-        user=auth.create_user(email=email,password=password,id=username)
+        user=auth.create_user(email=email,password=password)
         st.success("Account created successfully!")
         st.balloons()
         create_user(username, email)
