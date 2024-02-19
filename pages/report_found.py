@@ -21,9 +21,9 @@ def create_found_item(category, description, found_at, image_file, found_date, f
         "found_at": found_at,
         "image_url": image_url,
         "found_date":found_date.strftime('%Y/%m/%d'),
-        "found_by": found_by,
-        "created_at": datetime.now().strftime('%Y/%m/%d'),
-        "reported_by": session_state.user_data['uid']
+        "found_by": session_state.user_data['uid'],
+        "created_at": datetime.now().strftime('%Y/%m/%d')
+        # "reported_by": session_state.user_data['uid']
     })
 
 

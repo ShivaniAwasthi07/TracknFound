@@ -46,7 +46,7 @@ def browse_found_items():
                     st.header("")
                     st.header("")
                     st.header("")
-                    if session_state.user_data['uid'] == item_data["reported_by"]:
+                    if session_state.user_data['uid'] == item_data["found_by"]:
                         st.button('Delete', key=item)
                     else:
                         st.button('Claim', key=item)

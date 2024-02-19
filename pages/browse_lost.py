@@ -47,7 +47,7 @@ def browse_lost_items():
                     st.header("")
                     st.header("")
                     st.header("")
-                    if session_state.user_data['uid'] == item_data["reported_by"]:
+                    if session_state.user_data['uid'] == item_data["owner"]:
                         st.button('Delete', key=item)
                     else:
                         st.button('Claim', key=item)
