@@ -1,5 +1,5 @@
 import streamlit as st
-from main import session_state, db,bucket
+from main import db,bucket
 from datetime import datetime
 
 def upload_image_to_storage(image_file):
@@ -21,9 +21,9 @@ def create_found_item(category, description, found_at, image_file, found_date, f
         "found_at": found_at,
         "image_url": image_url,
         "found_date":found_date.strftime('%Y/%m/%d'),
-        "found_by": session_state.user_data['uid'],
+        "found_by": st.session_state.user_data['uid'],
         "created_at": datetime.now().strftime('%Y/%m/%d')
-        # "reported_by": session_state.user_data['uid']
+        # "reported_by": st.session_state.user_data['uid']
     })
 
 
@@ -36,14 +36,15 @@ def report_found_item_page():
     image_file = st.file_uploader("Upload Image", type=["jpg", "png"])
     found_at = st.text_area("Found At:")
     found_date = st.date_input("Found Date")
-    found_by = session_state.user_data['uid']
+    found_by = st.session_state.user_data['uid']
     # Submit button
     if st.button("Submit"):
         create_found_item(category, description, found_at, image_file,found_date, found_by)
         st.success("Item reported successfully!")
         st.balloons()
 
-if session_state.user_data:
-    report_found_item_page()
-else:
-    st.switch_page('pages/login.py')
+if __name__ == "__main__":
+    if 'user_data' in st.session_state:
+        report_found_item_page()
+    else:
+        st.switch_page('pages/login.py')

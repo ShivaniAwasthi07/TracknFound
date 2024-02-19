@@ -1,5 +1,5 @@
 import streamlit as st
-from main import session_state, db
+from main import db
 
 # Function to fetch found items from Firebase Firestore
 def fetch_lost_items():
@@ -47,7 +47,7 @@ def browse_lost_items():
                     st.header("")
                     st.header("")
                     st.header("")
-                    if session_state.user_data['uid'] == item_data["owner"]:
+                    if st.session_state.user_data['uid'] == item_data["owner"]:
                         st.button('Delete', key=item)
                     else:
                         st.button('Claim', key=item)
@@ -55,9 +55,10 @@ def browse_lost_items():
     else:
         st.write("No items found.")
 
-# Display the report found item page    
-if session_state.user_data:
-    st.set_page_config(layout="wide")
-    browse_lost_items()
-else:
-    st.switch_page('pages/login.py')
+if __name__ == "__main__":
+    # Display the report found item page    
+    if 'user_data' in st.session_state:
+        st.set_page_config(layout="wide")
+        browse_lost_items()
+    else:
+        st.switch_page('pages/login.py')
